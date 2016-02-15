@@ -762,9 +762,9 @@
 				this.set('_editing', false, this.editingRow);
 			}
 			this.set('editingRow', row);
-			e.target.setAttribute('hidden', true);
-			e.target.previousElementSibling.removeAttribute('hidden');
-			Polymer.dom(e.target.previousElementSibling).querySelector('input,select,textarea').focus();
+			e.target.parentElement.setAttribute('hidden', true);
+			e.target.parentElement.previousElementSibling.removeAttribute('hidden');
+			Polymer.dom(e.target.parentElement.previousElementSibling).querySelector('input,select,textarea').focus();
 		},
 		save: function(e) {
 			var row    = e.model.row;
@@ -790,7 +790,11 @@
 					var reader = editor.nextElementSibling;
 					editor.setAttribute('hidden', true);
 					reader.removeAttribute('hidden');
-					reader.innerText = this.readContent(row, column);
+					if (column.type == 'html') {
+						reader.firstChild.innerHTML = this.readContent(row, column);
+					} else {
+						reader.firstChild.innerText = this.readContent(row, column);
+					}
 					if (row[column.name] !== undefined && row[column.name] !== '') {
 						reader.classList.remove('empty');
 					} else {
