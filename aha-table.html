@@ -1,62 +1,39 @@
-<!--
-//http://webcomponents.github.io/articles/web-components-best-practices/
--->
-<!--
-/**
- * @module aha-table
- *
- *
- * Searchable Sortable Editable Paginatable Data Table
- *
- * aha-table is an data table/grid, it cousumes a modal data
- * and modal meta to show a table that can search, sort, edit
- * in place and pagiation, click to edit.
- *
- * Examples:
- *
- *     <aha-table></aha-table>
- *
- *     <aha-table id="raw"
- *         selectable
- *         copyable
- *         removable
- *         movable
- *         seachable
- *         pagesize="20"
- *         pagesizetitle="Page Size:"
- *         summarytitle="Viewing">
- *         <aha-column name="title"
- *             type="string"
- *             label="My Title"
- *             sortable
- *             searchable
- *             required
- *             editable
- *             placeholder="Example text"
- *             default=""
- *             hint="Meaning title will help you remember">
- *         </aha-column>
- *     </aha-table/>
- *
- * Available Event Hander:
- *     after-invalid(Object detail)
- *     after-td-click(Object detail)
- *     after-td-dbclick(Object detail)
- *     after-create(Object new_record)
- *     after-copy(Object new_record)
- *     after-save(Object new_record)
- *     after-select(Object new_record)
- *     after-remove(Object removed_record)
- *     after-move-down(Object moved_record)
- *     after-move-up(Object moved_record)
- *
- * @class aha-table
- * @author Louis Liu<louis.wenchao.liu@gmail.com>
- *
- */
--->
+<link rel="import" href="../polymer/polymer.html">
 
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<!--
+  aha-table is an data table/grid, it cousumes a modal data
+  and modal meta to show a table that can search, sort, edit
+  in place and pagiation, click to edit.
+ 
+  Examples:
+ 
+      <aha-table></aha-table>
+ 
+      <aha-table id="raw"
+          selectable
+          copyable
+          removable
+          movable
+          seachable
+          pagesize="20"
+          pagesizetitle="Page Size:"
+          summarytitle="Viewing">
+          <aha-column name="title"
+              type="string"
+              label="My Title"
+              sortable
+              searchable
+              required
+              editable
+              placeholder="Example text"
+              default=""
+              hint="Meaning title will help you remember">
+          </aha-column>
+      </aha-table/>
+
+  @demo demo/index.html
+	@hero hero.svg
+-->
 
 <dom-module id="aha-table">
 	<style>
@@ -198,7 +175,7 @@
 										<select
 											on-change="search">
 												<template is="dom-repeat" items="{{column.options}}" as="option">
-													<option value$="{{option.value}}">{{option.label}}</option>
+													<option value="{{option.value}}">{{option.label}}</option>
 												</template>
 										</select>
 									</template>
@@ -277,25 +254,25 @@
 										<input type="text"
 											required$="{{column.required}}"
 											on-blur="save"
-											value$="{{getValue(row,column.name)}}"/>
+											value="{{getValue(row,column.name)}}"/>
 									</template>
 									<template is="dom-if" if="{{isEqual(column.type, 'date')}}">
 										<input type="date"
 											required?="{{column.required}}"
 											on-blur="save"
-											value$="{{getValue(row,column.name)}}"/>
+											value="{{getValue(row,column.name)}}"/>
 									</template>
 									<template is="dom-if" if="{{isEqual(column.type, 'time')}}">
 										<input type="time"
 											required?="{{column.required}}"
 											on-blur="save"
-											value$="{{getValue(row,column.name)}}"/>
+											value="{{getValue(row,column.name)}}"/>
 									</template>
 									<template is="dom-if" if="{{isEqual(column.type, 'datetime')}}">
 										<input type="datetime"
 											required?="{{column.required}}"
 											on-blur="save"
-											value$="{{getValue(row,column.name)}}"/>
+											value="{{getValue(row,column.name)}}"/>
 									</template>
 									<template is="dom-if" if="{{isEqual(column.type, 'text')}}">
 										<textarea
@@ -594,6 +571,47 @@
 				type: String,
 				value: ""
 			}
+			// Following properties are to be set by behavior users
+        /**
+         * Description todo.
+         * @event after-invalid
+         */
+        /**
+         * Description todo.
+         * @event after-td-click
+         */
+        /**
+         * Description todo.
+         * @event after-td-dbclick
+         */
+         /**
+         * Description todo.
+         * @event after-create
+         */
+         /**
+         * Description todo.
+         * @event after-copy
+         */
+         /**
+         * Description todo.
+         * @event after-save
+         */
+         /**
+         * Description todo.
+         * @event after-select
+         */
+         /**
+         * Description todo.
+         * @event after-remove
+         */
+         /**
+         * Description todo.
+         * @event after-move-down
+         */
+         /**
+         * Description todo.
+         * @event after-move-up
+         */
 		},
 
 		ready: function() {
@@ -762,9 +780,9 @@
 				this.set('_editing', false, this.editingRow);
 			}
 			this.set('editingRow', row);
-			e.target.parentElement.setAttribute('hidden', true);
-			e.target.parentElement.previousElementSibling.removeAttribute('hidden');
-			Polymer.dom(e.target.parentElement.previousElementSibling).querySelector('input,select,textarea').focus();
+			e.target.setAttribute('hidden', true);
+			e.target.previousElementSibling.removeAttribute('hidden');
+			Polymer.dom(e.target.previousElementSibling).querySelector('input,select,textarea').focus();
 		},
 		save: function(e) {
 			var row    = e.model.row;
@@ -790,11 +808,7 @@
 					var reader = editor.nextElementSibling;
 					editor.setAttribute('hidden', true);
 					reader.removeAttribute('hidden');
-					if (column.type == 'html') {
-						reader.firstChild.innerHTML = this.readContent(row, column);
-					} else {
-						reader.firstChild.innerText = this.readContent(row, column);
-					}
+					reader.innerText = this.readContent(row, column);
 					if (row[column.name] !== undefined && row[column.name] !== '') {
 						reader.classList.remove('empty');
 					} else {
@@ -1148,27 +1162,20 @@
 
 
 <!--
-/**
- * @module aha-column
- *
- *
- * child element for aha-table, used for meta building
- *
- *    <aha-column
- *         name="content"
- *         type="text"
- *         sortable
- *         searchable
- *         required
- *         editable
- *         placeholder="example"
- *         default="">
- *    </aha-column>
- *
- * @class aha-column
- * @author Louis Liu<louis.wenchao.liu@gmail.com>
- *
- */
+  child element for aha-table, used for meta building
+ 
+ 	Examples:
+
+				<aha-column
+				    name="content"
+				    type="text"
+				    sortable
+				    searchable
+				    required
+				    editable
+				    placeholder="example"
+				    default="">
+				</aha-column>
 -->
 <script>
 	Polymer({
@@ -1240,23 +1247,14 @@
 
 
 <!--
-/**
- * @module aha-html-echo
- *
- *
- * Generates html elements dynamically, inspired by sortable-table
- * https://github.com/stevenrskelton/sortable-table
- *
- * WARNING! Potential XSS vulnerability if `html` comes from an untrusted source
- *
- *    <aha-html-echo
- *         html="html">
- *    </aha-html-echo>
- *
- * @class aha-html-echo
- * @author Michael Heinrichs<michael.heinrichs@canoo.com>
- *
- */
+  Generates html elements dynamically, inspired by sortable-table
+  https://github.com/stevenrskelton/sortable-table
+ 
+  WARNING! Potential XSS vulnerability if `html` comes from an untrusted source
+ 
+     <aha-html-echo
+          html="html">
+     </aha-html-echo>
 -->
 <script>
 	Polymer({

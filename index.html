@@ -1,204 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
 <html>
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&lt;aha-table&gt;</title>
-	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- Importing Web Component's Polyfill -->
-	<script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<!-- Importing Custom Elements -->
-	<link rel="import" href="src/aha-table.html">
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
-	<!-- used when shadow dom is natively implemented -->
-	<link rel="import" href="demo/theme.css">
-	<!-- used when shadow dom is not implemented -->
-	<link rel="stylesheet" href="demo/theme-shim.css">
-	<style>
-	#console {
-		color: red;
-	}
-	</style>
+  <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../iron-component-page/iron-component-page.html">
+
 </head>
-<body>
-	<h2>Simplest usage: raw style, auto-detected columns, default attributes</h2>
-	<aha-table id="raw"></aha-table>
+<body unresolved>
+  <!-- Note: if the main element for this repository doesn't
+       match the folder name, add a src="&lt;main-component&gt;.html" attribute,
+       where &lt;main-component&gt;.html" is a file that imports all of the
+       components you want documented. -->
+  <iron-component-page></iron-component-page>
 
-	<hr/>
-	<h2>Advanced usage: themed, customized columns, customized attributes, customized event handlers.</h2>
-	<div id="console"></div>
-	<aha-table id="themed"
-
-		selectable
-		searchable
-		copyable
-		removable
-		movable
-
-		pagesize="5"
-		data-sizelist="[2,5,10]"
-
-		pagesizetext="Page Size: "
-		summarytext="Viewing: "
-		pagetext="Page:"
-		pageoftext="of"
-		itemoftext="of"
-
-		searchtitle="Show/Hide Filters"
-		sorttitle="click to sort"
-		selecttitle="click to select"
-		selectalltitle="click to select/deselect all"
-		edittitle="click to edit"
-		copytitle="click to copy"
-		removetitle="click to remove"
-		movedowntitle="move down"
-		moveuptitle="move up"
-		searchtitle="click to show/hide search filters bar"
-		firsttitle="First"
-		previoustitle="Previous"
-		nexttitle="Next"
-		lasttitle="Last"
-		>
-		<aha-column name="title"
-			type="string"
-
-			sortable
-			searchable
-			editable
-			required
-
-			searchplaceholder="Type to filter title"
-			placeholder="Evenet Title"
-			default=""
-			hint="Meaningful title will help you remember"></aha-column>
-		<aha-column name="date"
-			type="date"
-
-			searchable
-			editable
-			sortable
-			required
-
-			placeholder="Event Date"
-			hint="Dates are required"
-			default="2011-12-21"></aha-column>
-		<aha-column name="time"
-			type="time"
-			editable
-
-			placeholder="Event Time"
-			hint="Time are not required"
-			default="19:00"></aha-column>
-		<aha-column name="datetime"
-			type="datetime"
-			editable
-
-			placeholder="Stop Date Time"
-			hint="Time are not required"></aha-column>
-		<aha-column name="type"
-			type="choice"
-
-			searchable
-			editable
-			sortable
-			required
-
-			placeholder="Event Type"
-			default="private"
-			hint="Public events will be available to everyone"
-			data-choices='{"":"", "private":"Private Event", "public":"Public Event"}'></aha-column>
-		<aha-column name="enabled"
-			type="boolean"
-
-			searchable
-			editable
-			sortable
-			required
-
-			data-choices='{"1":"Yes", "0":"No"}'
-			placeholder="Yes/No"
-			hint="Only enabled events will get alert"
-			default=""></aha-column>
-		<aha-column name="content"
-			type="text"
-
-			searchable
-			editable
-			required
-
-			hint="Keep it short"
-			placeholder="Event Content"
-			default=""></aha-column>
-        <aha-column name="html"
-            type="html"
-
-            required
-
-            placeholder=""
-            default=""></aha-column>
-        <aha-column name="title"
-            label="Renderer"
-            type="string"
-            renderer="customRenderer"
-            placeholder=""
-            default=""></aha-column>
-	</aha-table>
-	<BUTTON id="create" onclick="themed.create();">Create</BUTTON>
-
-	<hr/>
-	<h2><a href="demo/performance.html">Performance Test</a></h2>
-
-	<script>
-		var events = [
-			{ title: "gym", date: new Date().toISOString().slice(0, 10), type: "private", content: "5*20 situps, 5 miles running, 5 minutes PLANKS", enabled: true, html: "<a href='http://www.google.com'>Search</a>" },
-			{ title: "breakfast", date: new Date().toISOString().slice(0, 10), type: "private", enabled: true },
-			{ title: "work", date: new Date().toISOString().slice(0, 10), type: "public", content: "implement aha-table plymer element", enabled: true },
-			{ title: "lunch", date: new Date().toISOString().slice(0, 10), type: "public", content: null, enabled: false },
-			{ title: "work", date: new Date().toISOString().slice(0, 10), type: "public", content: "implement aha-table plymer element" },
-			{ title: "lunch", date: new Date().toISOString().slice(0, 10), type: "public", content: null },
-			{ title: "work", date: new Date().toISOString().slice(0, 10), type: "public", content: "implement aha-table plymer element", enabled: true },
-			{ title: "", date: new Date().toISOString().slice(0, 10), type: "public", content: null },
-			{ title: "work", date: new Date().toISOString().slice(0, 10), type: "public", content: "implement aha-table plymer element", enabled: true },
-			{ title: "", date: new Date().toISOString().slice(0, 10), type: "public", content: null },
-			{ title: "meeting", date: new Date().toISOString().slice(0, 10), type: "public", content: "introduce web components to the team" },
-			{ title: "dinner", date: new Date().toISOString().slice(0, 10), type: "private" }
-		];
-		var raw     = document.getElementById("raw");
-		var themed  = document.getElementById("themed");
-		raw.data = events;
-		themed.data = JSON.parse(JSON.stringify(events));//deep copy so that they have independent data source.
-		var table_log = function(msg) {
-			document.getElementById("console").innerHTML = msg;
-		};
-		themed.addEventListener('after-invalid', function(e) {
-			table_log('This field is required');
-			e.detail.row._editing=true;
-			e.detail.event.target.focus();
-		});
-		themed.addEventListener('after-create', function(e) {
-			table_log('created one record');
-		});
-		themed.addEventListener('after-remove', function(e) {
-			table_log('removed one record!');
-		});
-		themed.addEventListener('after-copy', function(e) {
-			table_log('copied one record!');
-		});
-		themed.addEventListener('after-save', function(e) {
-			table_log('saved one record!');
-		});
-		themed.addEventListener('after-move-down', function(e) {
-			table_log('moved one record down!');
-		});
-		themed.addEventListener('after-move-up', function(e) {
-			table_log('moved one record up!');
-		});
-        themed.customRenderer = function(datum, row, col, ahaTable) {            
-            return datum.toUpperCase();
-        }
-	</script>
 </body>
 </html>
