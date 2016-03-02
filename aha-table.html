@@ -30,19 +30,7 @@
               hint="Meaning title will help you remember">
           </aha-column>
       </aha-table/>
- 
-  Available Event Hander:
-      after-invalid(Object detail)
-      after-td-click(Object detail)
-      after-td-dbclick(Object detail)
-      after-create(Object new_record)
-      after-copy(Object new_record)
-      after-save(Object new_record)
-      after-select(Object new_record)
-      after-remove(Object removed_record)
-      after-move-down(Object moved_record)
-      after-move-up(Object moved_record)
- 
+
   @demo demo/index.html
 	@hero hero.svg
 -->
@@ -583,6 +571,47 @@
 				type: String,
 				value: ""
 			}
+			// Following properties are to be set by behavior users
+        /**
+         * Description todo.
+         * @event after-invalid
+         */
+        /**
+         * Description todo.
+         * @event after-td-click
+         */
+        /**
+         * Description todo.
+         * @event after-td-dbclick
+         */
+         /**
+         * Description todo.
+         * @event after-create
+         */
+         /**
+         * Description todo.
+         * @event after-copy
+         */
+         /**
+         * Description todo.
+         * @event after-save
+         */
+         /**
+         * Description todo.
+         * @event after-select
+         */
+         /**
+         * Description todo.
+         * @event after-remove
+         */
+         /**
+         * Description todo.
+         * @event after-move-down
+         */
+         /**
+         * Description todo.
+         * @event after-move-up
+         */
 		},
 
 		ready: function() {
