@@ -2,8 +2,7 @@
   "name": "aha-table",
   "version": "2.0.13",
   "authors": [
-    "Louis Liu",
-    "Samuel LESPES CARDILLO <lespes29@gmail.com>"
+    "Louis Liu"
   ],
   "description": "Polymer Element for aha-table, a searchable, sortable, editable, selectable, paginatable, copyable, removeable, movable table/grid.",
   "keywords": [
@@ -14,7 +13,7 @@
   ],
   "main": "aha-table.html",
   "license": "MIT",
-  "homepage": "https://github.com/samuelcardillo/aha-table",
+  "homepage": "https://github.com/liuwenchao/aha-table",
   "ignore": [
     "/.*",
     "/test/"
